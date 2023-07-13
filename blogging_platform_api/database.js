@@ -19,12 +19,12 @@ const createTableQuery = `
   CREATE TABLE IF NOT EXISTS Posts (
     id SERIAL PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
-    contents VARCHAR(5000) NOT NULL,
+    contents TEXT NOT NULL,
     postDate Date NOT NULL
   );
   CREATE TABLE IF NOT EXISTS Comments (
     id SERIAL PRIMARY KEY,
-    contents VARCHAR(1000) NOT NULL,
+    contents TEXT NOT NULL,
     postDate Date NOT NULL
   );
 `;
