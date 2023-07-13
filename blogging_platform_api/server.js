@@ -30,33 +30,38 @@ app.get("/", (req, res) => {
 
 
 
+
+
+
 // Get all the posts
 app.get("/posts", async (req, res) => {
   try {
-    const allPosts = await query("SELECT * FROM Posts");
+    const allPosts = await BlogPost.findAll();
 
-    res.status(200).json(allPosts.rows);
+    res.status(200).json(allPosts);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).send({ message: err.message });
   }
 });
+
+
 
 // Get a specific post
 app.get("/posts/:id", async (req, res) => {
   const postId = parseInt(req.params.id, 10);
 
   try {
-    const post = await query("SELECT * FROM Post WHERE id = $1", [postId]);
+    const post = await BlogPost.findOne({ where: { id: postId } });
 
-    if (post.rows.length > 0) {
-      res.status(200).json(post.rows[0]);
+    if (post) {
+      res.status(200).json(post);
     } else {
       res.status(404).send({ message: "Post not found" });
     }
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).send({ message: err.message });
   }
 });
 
@@ -64,50 +69,34 @@ app.get("/posts/:id", async (req, res) => {
 
 // Create a new post
 app.post("/posts", async (req, res) => {
-  const {  title, contents, postDate } = req.body;
-
   try {
-    const newPost = await query(
-      `INSERT INTO Posts (title, contents, postDate) VALUES ($1, $2, $3) RETURNING *`,
-      [title, contents, postDate]
-    );
-      console.log(newPost);
-    res.status(201).json(newPost.rows[0]);
+    const newPost = await BlogPost.create(req.body);
+
+    res.status(201).json(newPost);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).send({ message: err.message });
   }
 });
+
+
+
 
 // Update a specific post
 app.patch("/posts/:id", async (req, res) => {
   const postId = parseInt(req.params.id, 10);
 
-  const fieldNames = [
-    "title", 
-    "contents", 
-    "postDate",
-  ].filter((name) => req.body[name]);
-
-  let updatedValues = fieldNames.map(name => req.body[name]);
-  const setValuesSQL = fieldNames.map((name, i) => {
-    return `${name} = $${i + 1}`
-  }).join(', ');
-
   try {
-    const updatedPost = await query(
-      `UPDATE Posts SET ${setValuesSQL} WHERE id = $${fieldNames.length+1} RETURNING *`,
-      [...updatedValues, postId]
-    );
+    const [numberOfAffectedRows, affectedRows] = await BlogPost.update(req.body, { where: { id: postId }, returning: true });
 
-    if (updatedPost.rows.length > 0) {
-      res.status(200).json(updatedPost.rows[0]);
+    if (numberOfAffectedRows > 0) {
+      res.status(200).json(affectedRows[0]);
     } else {
       res.status(404).send({ message: "Post not found" });
     }
   } catch (err) {
+    res.status(500).send({ message: err.message });
     console.error(err);
-    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -117,15 +106,21 @@ app.delete("/posts/:id", async (req, res) => {
   const postId = parseInt(req.params.id, 10);
 
   try {
-    const deleteOp = await query("DELETE FROM Posts WHERE id = $1", [postId]);
+    const deleteOp = await BlogPost.destroy({ where: { id: postId } });
 
-    if (deleteOp.rowCount > 0) {
+    if (deleteOp > 0) {
       res.status(200).send({ message: "Post deleted successfully" });
     } else {
       res.status(404).send({ message: "Post not found" });
     }
-  }catch (err) {
+  } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).send({ message: err.message });
   }
+});
+
+
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
 });

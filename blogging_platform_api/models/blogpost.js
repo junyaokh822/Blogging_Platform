@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
     },
     contents: {
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
       allowNull:false,
     },
     postDate: {
