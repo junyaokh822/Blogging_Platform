@@ -69,13 +69,16 @@ app.get("/posts/:id", async (req, res) => {
 
 // Create a new post
 app.post("/posts", async (req, res) => {
+  const postData = req.body;
   try {
-    const newPost = await BlogPost.create(req.body);
-
+    const newPost = await BlogPost.create(postData);
     res.status(201).json(newPost);
   } catch (err) {
+    if (err.name === 'SequelizeValidationError') {
+      return res.status(422).json({ errors: err.errors.map(e => e.message) });
+    }
     console.error(err);
-    res.status(500).send({ message: err.message });
+    res.status(500).json({ message: 'An unexpected error occurred.' });
   }
 });
 
