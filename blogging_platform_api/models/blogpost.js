@@ -36,11 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         }
     },
-  }, {
+  }, 
+  {
     sequelize,
     modelName: 'BlogPost',
     tableName: 'blog_posts',
-    underscored: true 
   });
   return BlogPost;
 };
