@@ -12,14 +12,29 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type:DataTypes.STRING, 
       allowNull:false,
+      validate: {
+        notEmpty: {
+          msg: 'Title is required.',
+        },
+        }
     },
     contents: {
       type:DataTypes.TEXT,
       allowNull:false,
+      validate: {
+        notEmpty: {
+          msg: 'Contents are required.',
+        },
+        }
     },
     postDate: {
       type:DataTypes.DATE,
-       allowNull:false
+       allowNull:false,
+       validate: {
+        notEmpty: {
+          msg: 'Post date is required.',
+        },
+        }
     },
   }, {
     sequelize,
