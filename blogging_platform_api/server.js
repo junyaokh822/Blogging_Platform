@@ -1,8 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 4000;
-const BlogPost = require("./models/blogpost");
-const { BlogPost } = require('./models');
+const { blogpost } = require('./models');
 const { query } = require('./database');
 require("dotenv").config();
 
@@ -36,7 +35,7 @@ app.get("/", (req, res) => {
 // Get all the posts
 app.get("/posts", async (req, res) => {
   try {
-    const allPosts = await BlogPost.findAll();
+    const allPosts = await blogpost.findAll();
 
     res.status(200).json(allPosts);
   } catch (err) {
@@ -52,7 +51,7 @@ app.get("/posts/:id", async (req, res) => {
   const postId = parseInt(req.params.id, 10);
 
   try {
-    const post = await BlogPost.findOne({ where: { id: postId } });
+    const post = await blogpost.findOne({ where: { id: postId } });
 
     if (post) {
       res.status(200).json(post);
@@ -71,7 +70,7 @@ app.get("/posts/:id", async (req, res) => {
 app.post("/posts", async (req, res) => {
   const postData = req.body;
   try {
-    const newPost = await BlogPost.create(postData);
+    const newPost = await blogpost.create(postData);
     res.status(201).json(newPost);
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
@@ -90,7 +89,7 @@ app.patch("/posts/:id", async (req, res) => {
   const postId = parseInt(req.params.id, 10);
 
   try {
-    const [numberOfAffectedRows, affectedRows] = await BlogPost.update(req.body, { where: { id: postId }, returning: true });
+    const [numberOfAffectedRows, affectedRows] = await blogpost.update(req.body, { where: { id: postId }, returning: true });
 
     if (numberOfAffectedRows > 0) {
       res.status(200).json(affectedRows[0]);
@@ -109,7 +108,7 @@ app.delete("/posts/:id", async (req, res) => {
   const postId = parseInt(req.params.id, 10);
 
   try {
-    const deleteOp = await BlogPost.destroy({ where: { id: postId } });
+    const deleteOp = await blogpost.destroy({ where: { id: postId } });
 
     if (deleteOp > 0) {
       res.status(200).send({ message: "Post deleted successfully" });
