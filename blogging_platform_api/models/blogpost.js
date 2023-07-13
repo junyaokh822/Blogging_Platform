@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class BlogPost extends Model {
     static associate(models) {
-      // define association here
+      this.belongsTo(models.User)
     }
   }
   BlogPost.init({
