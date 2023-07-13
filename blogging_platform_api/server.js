@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 4000;
 const BlogPost = require("./models/blogpost");
+const { BlogPost } = require('./models');
 const { query } = require('./database');
 require("dotenv").config();
 
