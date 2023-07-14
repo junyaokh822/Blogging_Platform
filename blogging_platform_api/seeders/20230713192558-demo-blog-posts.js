@@ -47,18 +47,21 @@ module.exports = {
         postDate: new Date("2023-06-17"),
         createdAt: new Date(),
         updatedAt: new Date(),
+        UserId: userId,
       },
       {
         contents: "I learned a lot from this article.",
         postDate: new Date("2023-06-24"),
         createdAt: new Date(),
         updatedAt: new Date(),
+        UserId: userId,
       },
       {
         contents: "Thanks for sharing this information!",
         postDate: new Date("2023-06-20"),
         createdAt: new Date(),
         updatedAt: new Date(),
+        UserId: userId,
       },
     ];
 
