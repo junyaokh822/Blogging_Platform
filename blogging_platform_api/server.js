@@ -178,6 +178,12 @@ app.patch("/posts/:id", authenticateUser, async (req, res) => {
   const postId = parseInt(req.params.id, 10);
 
   try {
+    const record = await BlogPost.findOne({ where: { id: postId } });
+    if (record && record.UserId !== parseInt(req.session.userId, 10)) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform that action." });
+    } 
     const [numberOfAffectedRows, affectedRows] = await BlogPost.update(req.body, { where: { id: postId }, returning: true });
 
     if (numberOfAffectedRows > 0) {
@@ -197,6 +203,12 @@ app.delete("/posts/:id", authenticateUser, async (req, res) => {
   const postId = parseInt(req.params.id, 10);
 
   try {
+    const record = await BlogPost.findOne({ where: { id: postId } });
+    if (record && record.UserId !== parseInt(req.session.userId, 10)) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform that action." });
+    } 
     const deleteOp = await BlogPost.destroy({ where: { id: postId } });
 
     if (deleteOp > 0) {
