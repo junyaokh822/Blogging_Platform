@@ -1,8 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 4000;
-const { BlogPost } = require('./models');
-const { query } = require('./database');
+const { BlogPost, User, Comments } = require('./models');
 require("dotenv").config();
 
 
@@ -16,11 +15,7 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 
-function getNextIdFromCollection(collection) {
-  if (collection.length === 0) return 1;
-  const lastRecord = collection[collection.length - 1];
-  return lastRecord.id + 1;
-}
+
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Blog_Platform API!!!!");
