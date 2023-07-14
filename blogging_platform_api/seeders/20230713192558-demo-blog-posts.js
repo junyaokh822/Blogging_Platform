@@ -40,10 +40,34 @@ module.exports = {
       updatedAt: new Date(),
       UserId: userId,
     }], {});
+
+    const commentsData = [
+      {
+        contents: "Great post!",
+        postDate: new Date("2023-06-17"),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        contents: "I learned a lot from this article.",
+        postDate: new Date("2023-06-24"),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        contents: "Thanks for sharing this information!",
+        postDate: new Date("2023-06-20"),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+
+    await queryInterface.bulkInsert('comments', commentsData, {});
   },
 
   async down (queryInterface, Sequelize) {
     await queryInterface.bulkDelete('blog_posts', null, {});
     await queryInterface.bulkDelete('users', null, {});
+    await queryInterface.bulkDelete('comments', null, {});
   }
 };
