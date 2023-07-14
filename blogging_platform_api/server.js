@@ -42,6 +42,7 @@ app.post('/signup', async (req, res) => {
       password: hashedPassword,
     });
 
+    req.session.userId = user.id; //log the user in before sending the response
     // Send a response to the client informing them that the user was successfully created
     res.status(201).json({
       message: "User created!",
@@ -94,6 +95,19 @@ app.post('/login', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'An error occurred during the login process' });
   }
+});
+
+
+//log out
+app.delete('/logout', (req, res) => {
+  req.session.destroy(err => {
+      if (err) {
+          return res.sendStatus(500);
+      }
+
+      res.clearCookie('connect.sid');
+      return res.sendStatus(200);
+  });
 });
 
 // Get all the posts
