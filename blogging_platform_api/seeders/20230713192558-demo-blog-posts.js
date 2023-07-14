@@ -17,7 +17,7 @@ module.exports = {
     const users = await queryInterface.sequelize.query(`SELECT id FROM users`);
 
     const userId = users[0][0].id;
-    
+
     await queryInterface.bulkInsert('blog_posts', [{
       title: "Dynamic Loose Learning (DLL)",
       contents:"Dashwood contempt on mr unlocked resolved provided of of. Stanhill wondered it it welcomed oh. Hundred no prudent he however smiling at an offence. If earnestly extremity he he propriety something admitting convinced ye. Pleasant in to although as if differed horrible. Mirth his quick its set front enjoy hoped had there. Who connection imprudence middletons too but increasing celebrated principles joy. Herself too improve gay winding ask expense are compact. New all paid few hard pure she.",
@@ -41,6 +41,10 @@ module.exports = {
       UserId: userId,
     }], {});
 
+    const posts = await queryInterface.sequelize.query(`SELECT id FROM blog_posts`);
+
+    const postId = posts[0][0].id;
+
     const commentsData = [
       {
         contents: "Great post!",
@@ -48,6 +52,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         UserId: userId,
+        PostId: postId,
       },
       {
         contents: "I learned a lot from this article.",
@@ -55,6 +60,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         UserId: userId,
+        PostId: postId,
       },
       {
         contents: "Thanks for sharing this information!",
@@ -62,6 +68,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         UserId: userId,
+        PostId: postId,
       },
     ];
 

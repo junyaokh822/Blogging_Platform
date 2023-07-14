@@ -3,10 +3,10 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.addColumn("comments", "UserId", { //foreign key
+    await queryInterface.addColumn("comments", "PostId", { //foreign key
       type: Sequelize.INTEGER,
       references: {
-        model: "users",  //table name
+        model: "blog_posts",  //table name
         key: "id",
       },
       onUpdate: "CASCADE",
@@ -15,6 +15,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn("comments", "UserId");
+    await queryInterface.removeColumn("comments", "PostId");
   }
 };
