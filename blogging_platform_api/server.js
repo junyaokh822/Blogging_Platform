@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 4000;
+const bcrypt = require("bcryptjs");
 const { BlogPost, User, Comments } = require('./models');
 require("dotenv").config();
 
@@ -19,7 +20,33 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Blog_Platform API!!!!");
 });
 
+app.post('/signup', async (req, res) => {
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
+  try {
+    const user = await User.create({
+      username: req.body.username,
+      password: hashedPassword,
+    });
+
+    // Send a response to the client informing them that the user was successfully created
+    res.status(201).json({
+      message: "User created!",
+      user: {
+        username: user.username,
+      },
+    });
+  } catch (error) {
+    if (error.username === "SequelizeValidationError") {
+      return res.status(422).json({ errors: error.errors.map((e) => e.message) });
+    }
+    res.status(500).json({
+      message: "Error occurred while creating user",
+      error: error,
+    });
+  }
+ 
+});
 
 
 
