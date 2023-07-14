@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 4000;
 const bcrypt = require("bcryptjs");
+const session = require('express-session');
 const { BlogPost, User, Comments } = require('./models');
 require("dotenv").config();
 
@@ -15,6 +16,16 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.json());
+
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 3600000 // 1 hour 60x60x1000miliseconds
+  },
+}));
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Blog_Platform API!!!!");
