@@ -79,7 +79,7 @@ app.post('/login', async (req, res) => {
     bcrypt.compare(req.body.password, user.password, (error, result) => {
       if (result) {
         // Passwords match
-
+        req.session.userId = user.id;
         res.status(200).json({
           message: 'Logged in successfully',
           user: {
