@@ -7,6 +7,13 @@ const { BlogPost, User, Comments } = require('./models');
 require("dotenv").config();
 
 
+const authenticateUser = (req, res, next) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ message: 'You must be logged in to view this page.' });
+  }
+  next();
+};
+
 app.use((req, res, next) => {
   console.log(`Request: ${req.method} ${req.originalUrl}`)
   res.on("finish", () => {
@@ -110,8 +117,12 @@ app.delete('/logout', (req, res) => {
   });
 });
 
+
+
+
+
 // Get all the posts
-app.get("/posts", async (req, res) => {
+app.get("/posts", authenticateUser, async (req, res) => {
   try {
     const allPosts = await BlogPost.findAll();
 
@@ -125,7 +136,7 @@ app.get("/posts", async (req, res) => {
 
 
 // Get a specific post
-app.get("/posts/:id", async (req, res) => {
+app.get("/posts/:id", authenticateUser, async (req, res) => {
   const postId = parseInt(req.params.id, 10);
 
   try {
@@ -145,7 +156,7 @@ app.get("/posts/:id", async (req, res) => {
 
 
 // Create a new post
-app.post("/posts", async (req, res) => {
+app.post("/posts", authenticateUser, async (req, res) => {
   const postData = req.body;
   try {
     const newPost = await BlogPost.create(postData);
@@ -163,7 +174,7 @@ app.post("/posts", async (req, res) => {
 
 
 // Update a specific post
-app.patch("/posts/:id", async (req, res) => {
+app.patch("/posts/:id", authenticateUser, async (req, res) => {
   const postId = parseInt(req.params.id, 10);
 
   try {
@@ -182,7 +193,7 @@ app.patch("/posts/:id", async (req, res) => {
 
 
 // Delete a specific post
-app.delete("/posts/:id", async (req, res) => {
+app.delete("/posts/:id", authenticateUser, async (req, res) => {
   const postId = parseInt(req.params.id, 10);
 
   try {
