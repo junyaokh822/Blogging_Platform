@@ -3,7 +3,7 @@ const app = express();
 const port = 4000;
 const bcrypt = require("bcryptjs");
 const session = require('express-session');
-const { BlogPost, User, Comments } = require('./models');
+const { Comments, User, BlogPost} = require('./models');
 require("dotenv").config();
 
 
@@ -221,6 +221,133 @@ app.delete("/posts/:id", authenticateUser, async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+// Get all the comments
+app.get("/comments", authenticateUser, async (req, res) => {
+  try {
+    const allComments = await Comments.findAll();
+
+    res.status(200).json(allComments);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
+
+
+// Get a specific comments
+app.get("/comments/:id", authenticateUser, async (req, res) => {
+  const commentId = parseInt(req.params.id, 10);
+
+  try {
+    const comment = await Comments.findOne({ where: { id: commentId } });
+
+    if (comment) {
+      res.status(200).json(comment);
+    } else {
+      res.status(404).send({ message: "Comment not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
+
+
+// Create a new comment
+app.post("/comments", authenticateUser, async (req, res) => {
+  const commentData = req.body;
+  try {
+    const newComment = await Comments.create(commentData);
+    res.status(201).json(newComment);
+  } catch (err) {
+    if (err.name === 'SequelizeValidationError') {
+      return res.status(422).json({ errors: err.errors.map(e => e.message) });
+    }
+    console.error(err);
+    res.status(500).json({ message: 'An unexpected error occurred.' });
+  }
+});
+
+
+
+
+// Update a specific comment
+app.patch("/comments/:id", authenticateUser, async (req, res) => {
+  const commentId = parseInt(req.params.id, 10);
+
+  try {
+    const record = await Comments.findOne({ where: { id: commentId } });
+    if (record && record.UserId !== parseInt(req.session.userId, 10)) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform that action." });
+    } 
+    const [numberOfAffectedRows, affectedRows] = await Comments.update(req.body, { where: { id: commentId }, returning: true });
+
+    if (numberOfAffectedRows > 0) {
+      res.status(200).json(affectedRows[0]);
+    } else {
+      res.status(404).send({ message: "Comment not found" });
+    }
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+    console.error(err);
+  }
+});
+
+
+// Delete a specific comment
+app.delete("/comments/:id", authenticateUser, async (req, res) => {
+  const commentId = parseInt(req.params.id, 10);
+
+  try {
+    const record = await Comments.findOne({ where: { id: commentId } });
+    if (record && record.UserId !== parseInt(req.session.userId, 10)) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform that action." });
+    } 
+    const deleteOp = await Comments.destroy({ where: { id: commentId } });
+
+    if (deleteOp > 0) {
+      res.status(200).send({ message: "Comment deleted successfully" });
+    } else {
+      res.status(404).send({ message: "Comment not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
