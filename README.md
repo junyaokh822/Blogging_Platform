@@ -43,6 +43,24 @@ DB_NAME=your_database_name
 SESSION_SECRET=your_session_secret
 ```
 
+5. enerating a Session Secret Key and Adding it to .env
+
+
+1. In your terminal, open the Node.js REPL by simply typing node and hitting enter.
+
+2. Type the following command to generate a random string:
+```
+require("crypto").randomBytes(64).toString("hex")
+```
+3. This will output a random string which can be used as your secret key. Copy this string.
+
+4. Open your .env file and add the following line:
+```
+SESSION_SECRET=your_generated_secret
+```
+5. Replace your_generated_secret with your secret key
+
+
 ### Database Setup
 
 1. Run the database migrations to set up the necessary tables.
