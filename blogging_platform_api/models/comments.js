@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Comments extends Model {
     static associate(models) {
       this.belongsTo(models.User);
-      this.belongsTo(models.BlogPost);
+      // this.belongsTo(models.BlogPost,{foreignKey:'PostId'});
     }
   }
   Comments.init({
@@ -26,8 +26,26 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           msg: 'Post date is required.',
         },
-        }
+        }  
+    },
+    UserId:{
+      type:DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'UserId is required.',
+        },
     }
+  },
+  BlogPostId:{
+    type:DataTypes.INTEGER,
+    allowNull: false,
+    validate: {
+      notEmpty: {
+        msg: 'BlogPostId is required.',
+      },
+  }
+}
   }, {
     sequelize,
     modelName: 'Comments',
