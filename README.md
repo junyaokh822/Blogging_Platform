@@ -15,13 +15,13 @@ To get started with the project, follow the steps below:
 1. Clone the GitHub repository to your local machine.
 
 ```bash
-git clone https://github.com/your-username/your-project.git
+git clone https://github.com/junyaokh822/Blogging_Platform.git
 ```
 
 2. Change into the project's root directory.
 
 ```bash
-cd your-project
+cd blogging_platform_api/
 ```
 
 3. Install the project's dependencies using npm.
@@ -73,20 +73,23 @@ The server will start at `http://localhost:4000`.
 
 - Use the `/signup` endpoint to register a new user. Provide a `username` and `password` in the request body.
 - Use the `/login` endpoint to log in as a registered user. Provide the `username` and `password` in the request body.
+- Use the `/logout` endpoint to log out the account.
 
 ### Blog Posts
 
-- Use the `/posts` endpoint to create a new blog post. Provide the `title`, `contents`, and `postDate` in the request body.
-- Use the `/posts/:id` endpoint to retrieve a specific blog post by its ID.
-- Use the `/posts/:id` endpoint with the `PATCH` method to update a specific blog post by its ID. Provide the updated `title`, `contents`, or `postDate` in the request body.
-- Use the `/posts/:id` endpoint with the `DELETE` method to delete a specific blog post by its ID.
+- Use the GET:`/posts` endpoint to retrieve aLL blog posts.
+- Use the GET:`/posts/:id` endpoint to retrieve a specific blog post by its ID.
+- Use the POST: `/posts` endpoint to create a new blog post. Provide the `title`, `contents`, and `postDate` in the request body.
+- Use the PATCH:`/posts/:id` endpoint with the `PATCH` method to update a specific blog post by its ID. Provide the updated `title`, `contents`, or `postDate` in the request body.
+- Use the DELETE:`/posts/:id` endpoint with the `DELETE` method to delete a specific blog post by its ID.
 
 ### Comments
 
-- Use the `/comments` endpoint to create a new comment. Provide the `contents` and `postDate` in the request body.
-- Use the `/comments/:id` endpoint to retrieve a specific comment by its ID.
-- Use the `/comments/:id` endpoint with the `PATCH` method to update a specific comment by its ID. Provide the updated `contents` or `postDate` in the request body.
-- Use the `/comments/:id` endpoint with the `DELETE` method to delete a specific comment by its ID.
+- Use the GET:`/comments` endpoint to retrieve aLL comments.
+- Use the GET:`/comments/:id` endpoint to retrieve a specific comment by its ID.
+- Use the POST:`/comments` endpoint to create a new comment. Provide the `contents`,`postDate`,`UserId`,and `BlogPostId` in the request body.
+- Use the PATCH:`/comments/:id` endpoint with the `PATCH` method to update a specific comment by its ID. Provide the updated `contents` or `postDate` in the request body along with `UserId`,and `BlogPostId`.
+- Use the DELETE:`/comments/:id` endpoint with the `DELETE` method to delete a specific comment by its ID.
 
 ### Authentication and Authorization
 
