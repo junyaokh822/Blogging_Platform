@@ -5,6 +5,15 @@ const bcrypt = require("bcryptjs");
 const session = require('express-session');
 const { Comments, User, BlogPost} = require('./models');
 require("dotenv").config();
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+  })
+);
 
 
 const authenticateUser = (req, res, next) => {
