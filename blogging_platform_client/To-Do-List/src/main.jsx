@@ -6,14 +6,25 @@ import {BrowserRouter, RouterProvider,createBrowserRouter} from "react-router-do
 import NotePage, { loader as notePageLoader } from './NotePage';
 import Home from './pages/Home';
 import About from './pages/About';
+import AuthProvider from "./contexts/AuthContext";
+import Login, { action as loginAction } from "./routes/auth/Login";
+import Signup, { action as signupAction } from "./routes/auth/Signup";
+import Root, { loader as rootLoader } from "./routes/root";
 
 
 
 
 const router= createBrowserRouter ([
+  
   {
     path: "/",
-    element: <Home />,
+    
+    element: (
+      <ProtectedRoute>
+        <Home />
+      </ProtectedRoute>
+    ),
+    loader: rootLoader,
     loader: notePageLoader,
   },
   { 
@@ -22,15 +33,32 @@ const router= createBrowserRouter ([
   },
   { 
     path: "/note/:taskId",
-    element: <NotePage />,
+    element: (
+      <ProtectedRoute>
+        <NotePage />
+      </ProtectedRoute>
+    ),
     loader: notePageLoader,
-  }
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    action: loginAction,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+    action: signupAction,
+  },
+
 ]);
   
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 )
