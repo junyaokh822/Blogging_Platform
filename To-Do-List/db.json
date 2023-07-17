@@ -1,0 +1,43 @@
+{
+  "todos": [
+    {
+      "todo": "Take a break",
+      "completed": true,
+      "id": 3,
+      "note": "taking a 30 mins break."
+    },
+    {
+      "todo": "Watch TV",
+      "completed": true,
+      "id": 5
+    },
+    {
+      "todo": "Get Groceries",
+      "completed": true,
+      "notes": [
+        "dadsadas",
+        "dsd",
+        "updates"
+      ],
+      "id": 6
+    },
+    {
+      "todo": "Clean the house",
+      "completed": false,
+      "notes": [
+        "new note\n",
+        "old note"
+      ],
+      "id": 7
+    },
+    {
+      "todo": "Ride Bicycles",
+      "completed": false,
+      "notes": [
+        "sss",
+        "ddd"
+      ],
+      "id": 8
+    }
+  ]
+}
