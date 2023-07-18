@@ -9,7 +9,7 @@ import About from './pages/About';
 import AuthProvider from "./contexts/AuthContext";
 import Login, { action as loginAction } from "./routes/auth/Login";
 import Signup, { action as signupAction } from "./routes/auth/Signup";
-import Root, { loader as rootLoader } from "./routes/root";
+import Root, { loader as rootLoader, action as logoutAction,} from "./routes/root";
 
 const router= createBrowserRouter ([
   {
@@ -21,6 +21,7 @@ const router= createBrowserRouter ([
     ),
     loader: rootLoader,
     loader: notePageLoader,
+    action: logoutAction,
   },
   { 
     path: "/About",
