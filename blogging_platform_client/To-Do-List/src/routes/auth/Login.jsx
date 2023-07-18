@@ -1,5 +1,7 @@
 // src/routes/auth/Login.jsx
-import { Form, redirect } from "react-router-dom";
+import { Form, redirect, Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -21,6 +23,8 @@ export async function action({ request }) {
 }
 
 function Login() {
+  const { currentUser } = useContext(AuthContext);
+  if(currentUser) { return <Navigate to="/" /> }
   return (
     <Form method="post" className="selection:bg-blue-200 flex flex-col gap-2">
       <h1 className="text-white">Login</h1>
