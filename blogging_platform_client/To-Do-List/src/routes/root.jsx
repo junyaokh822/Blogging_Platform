@@ -3,13 +3,15 @@ import { Link, Outlet, useNavigation, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
 export async function loader({ request }) {
-  const response = await fetch("http://localhost:4000/api/auth/current_user");
+  const response = await fetch("/api/auth/current_user");
   if (response.ok) {
     const { user } = await response.json();
     return { currentUser: user };
   }
   return { currentUser: null };
 }
+
+
 
 export async function action({ request }) {
   const response = await fetch("/api/auth/logout", {

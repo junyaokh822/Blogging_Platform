@@ -4,7 +4,7 @@ import NoteForm from './NoteForm';
 import './App.css'; 
 
 export async function loader({ params }) {
-  const response = await fetch('http://localhost:3000/todos/' + params.taskId);
+  const response = await fetch('/api/todos/' + params.taskId);
   const todo = await response.json();
   return todo;
 }
@@ -16,7 +16,7 @@ function NotePage() {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/todos/${todo.id}`);
+        const response = await fetch(`/api/todos/${todo.id}`);
         const data = await response.json();
         if (data.notes) {
           setNotes(data.notes);
@@ -34,7 +34,7 @@ function NotePage() {
     setNotes(updatedNotes);
 
     try {
-      await fetch(`http://localhost:3000/todos/${taskId}`, {
+      await fetch(`/api/todos/${taskId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ function NotePage() {
     setNotes(updatedNotes);
 
     try {
-      await fetch(`http://localhost:3000/todos/${taskId}`, {
+      await fetch(`/api/todos/${taskId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

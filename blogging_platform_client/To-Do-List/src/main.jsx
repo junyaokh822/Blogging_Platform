@@ -20,7 +20,6 @@ const router= createBrowserRouter ([
         <Home />
       </ProtectedRoute>
     ),
-    // loader: {rootLoader, notePageLoader},
     loader: rootLoader,
     action: logoutAction,
   },
@@ -55,4 +54,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <RouterProvider router={router} />
     </AuthProvider>
   </React.StrictMode>
-)
+);

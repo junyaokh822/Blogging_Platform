@@ -54,7 +54,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         UserId: userId,
-        PostId: postId,
+        BlogPostId: postId,
       },
       {
         contents: "I learned a lot from this article.",
@@ -62,7 +62,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         UserId: userId,
-        PostId: postId,
+        BlogPostId: postId,
       },
       {
         contents: "Thanks for sharing this information!",
@@ -70,7 +70,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         UserId: userId,
-        PostId: postId,
+        BlogPostId: postId,
       },
     ];
 
