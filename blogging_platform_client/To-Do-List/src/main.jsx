@@ -11,14 +11,9 @@ import Login, { action as loginAction } from "./routes/auth/Login";
 import Signup, { action as signupAction } from "./routes/auth/Signup";
 import Root, { loader as rootLoader } from "./routes/root";
 
-
-
-
 const router= createBrowserRouter ([
-  
   {
     path: "/",
-    
     element: (
       <ProtectedRoute>
         <Home />
@@ -50,11 +45,8 @@ const router= createBrowserRouter ([
     element: <Signup />,
     action: signupAction,
   },
-
 ]);
   
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>
