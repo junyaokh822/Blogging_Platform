@@ -7,6 +7,7 @@ import NotePage, { loader as notePageLoader } from './NotePage';
 import Home from './pages/Home';
 import About from './pages/About';
 import AuthProvider from "./contexts/AuthContext";
+import ProtectedRoute from "./routes/ProtectedRoute";
 import Login, { action as loginAction } from "./routes/auth/Login";
 import Signup, { action as signupAction } from "./routes/auth/Signup";
 import Root, { loader as rootLoader, action as logoutAction,} from "./routes/root";
