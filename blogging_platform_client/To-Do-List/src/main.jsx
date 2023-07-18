@@ -20,8 +20,8 @@ const router= createBrowserRouter ([
         <Home />
       </ProtectedRoute>
     ),
+    // loader: {rootLoader, notePageLoader},
     loader: rootLoader,
-    loader: notePageLoader,
     action: logoutAction,
   },
   { 

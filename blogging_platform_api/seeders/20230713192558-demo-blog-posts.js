@@ -9,7 +9,6 @@ module.exports = {
       [
         {
           username: "Junyao",  //password: "password"
-          password:"123",
           createdAt: new Date(),
           updatedAt: new Date(),
           password: await bcrypt.hash("password",10)
