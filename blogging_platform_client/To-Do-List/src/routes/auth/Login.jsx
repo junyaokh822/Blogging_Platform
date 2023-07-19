@@ -7,7 +7,7 @@ export async function action({ request }) {
   const formData = await request.formData();
 
   console.log(Object.fromEntries(formData));
-  const response = await fetch("/api/auth/login", {
+  const response = await fetch("http://localhost:4000/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
